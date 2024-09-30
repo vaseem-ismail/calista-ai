@@ -1,0 +1,80 @@
+*{
+    margin: 0%;
+    padding: 0%;
+}
+body{
+    animation: animate 10s linear infinite;
+    background: fixed;
+    background-size: 100% 100% ;
+}
+@keyframes animate{
+    0%{background-image: url("./assets/Images/supra.jpg");}
+    20%{background-image: url("./assets/Images/Mustang.jpg");}
+    40%{background-image: url("./assets/Images/Dodge_hellcat.jpg");}
+    60%{background-image: url("./assets/Images/Nissan_gtr.jpeg");}
+    80%{background-image: url("./assets/Images/Skyline.jpg");}
+    100%{background-image: url("./assets/Images/supra.jpg");}
+}
+h1{
+    font-family: 'Alex Brush';
+    font-size: 300px;
+    position: absolute;
+    top:30%;
+    left: 20%;
+    filter: drop-shadow(2px 2px 20px white);
+}
+h6{
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    font-size: 100px;
+}
+#start{
+    width: 50%;
+    height: 50%;
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    background: transparent;
+    color: transparent;
+    border: transparent;
+    border-radius: 50%;
+}
+
+
+#stop{
+    width: 30%;
+    height: 30%;
+    position: absolute;
+    top: 70%;
+    left: 70%;
+    background: transparent;
+    color: transparent;
+    border: transparent;
+}
+
+.temp{
+    background-color: transparent;
+    width: 500px;
+    text-align: center;
+    height:300px;
+    font-size: 20px;
+    color: white;
+    /* position: absolute;
+    left: 70%; */
+    border-radius: 20px;
+}
+#location,#country,#weatherT,#weatherD,#weatherIcon,#oTemp,#feelLikeTemp,#minT,#maxT{
+    background-color: black;
+    width: fit-content;
+    border-radius: 20px;
+    margin-bottom: 70px;
+}
+#weatherIcon{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+
+
