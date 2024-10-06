@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./styles.css">
-    <link href='https://fonts.googleapis.com/css?family=Alex Brush' rel='stylesheet'>
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./styles.css">
+  <link href='https://fonts.googleapis.com/css?family=Alex Brush' rel='stylesheet'>
+  <title>Document</title>
 </head>
+
 <body>
-  <h6>Hey I am</h6>
-  <h1>Calista</h1>
 
 
-
-  <div class="machine hide_on_small">
+  <div class="machine">
     <div class="clock cont">
+      <img class="time_image" src="./assets/Images/sand_clock.png" alt="" width="100px">
       <p id="time"></p>
     </div>
 
@@ -33,29 +33,15 @@
 
 
   </div>
-  
-
-  <!-- I Want to Know Any Location -->
-  <div class="loc">
-    <p id="loca"></p>
-    <p id="coun"></p>
-    <p id="weatT"></p>
-    <p id="weatD"></p>
-    <img src="" id="wIcon" />
-    <p id="oT"></p>
-    <p id="feelLikeTemperature"></p>
-    <p id="minTemp"></p>
-    <p id="maxTemp"></p>
-  </div>
+  <!-- Commands -->
+  <div class="messages"></div>
+  <div class="commands"></div>
 
 
-
-
-
-
-<button id="start">start</button>
-<button id="stop">stop</button>
-<!-- <button id="speak">test</button> samplespeech -->
+  <button id="start">calista</button>
+  <h6>Hey I'm</h6>
+  <button id="stop">Mic Off</button>
+  <!-- <button id="speak">test</button> -->
 
 
 
@@ -68,4 +54,5 @@
   <script src="./index.js"></script>
   <noscript>you need Javascript for this webapp</noscript>
 </body>
+
 </html>
