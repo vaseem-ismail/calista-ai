@@ -1,7 +1,18 @@
+
 // Elements
 const startBtn = document.querySelector("#start");
 const stopBtn = document.querySelector("#stop");
 const time = document.querySelector("#time");
+const msgs = document.querySelector(".messages");
+
+
+//Creating chatting pad
+function createMsg(who, msg) {
+  let newmsg = document.createElement("p")
+  newmsg.innerText = msg;
+  newmsg.setAttribute("class", who)
+  msgs.appendChild(newmsg);
+}
 
 // Weather
 function weather(location) {
@@ -28,9 +39,9 @@ function weather(location) {
   xhr.send();
 }
 
-weather("Chennai");
+weather("Chennai"); // Calling weather function
 
-// Kelvin to Celsius
+// Kelvin to Celsius conversion function
 function ktc(k) {
   k = k - 273.15;
   return k.toFixed(2);
@@ -40,9 +51,9 @@ function ktc(k) {
 function setupTime() {
   setInterval(() => {
     let date = new Date();
-    let hrs = date.getHours();
-    let mins = date.getMinutes();
-    let secs = date.getSeconds();
+    let hrs = String(date.getHours()).padStart(2, '0');
+    let mins = String(date.getMinutes()).padStart(2, '0');
+    let secs = String(date.getSeconds()).padStart(2, '0');
     time.textContent = `${hrs} : ${mins} : ${secs}`;
   }, 1000);
 }
@@ -56,70 +67,112 @@ recognition.onresult = function (event) {
   let baseTrans = event.resultIndex;
   let transcript = event.results[baseTrans][0].transcript.toLowerCase();
   console.log(`my words: ${transcript}`);
+  createMsg("usermsg", transcript)
+
+
+  recognition.onend = function () {
+    console.log("Recognition ended, restarting...");
+    recognition.start(); // Restart recognition automatically after it ends
+  };
 
   // Friendly commands
   if (transcript.includes("hey what is your name") || transcript.includes("tell about your self")) {
     readOut("I am Calista created to help the user in web");
   }
-  if (transcript.includes("hey calista") || transcript.includes("hey cals")) {
-    readOut("Hi sir, I am here. Please give me a task.");
+  if (transcript.includes("hi p a") || transcript.includes("calista")) {
+    readOut("Hi sir, I am here. give me a task.");
   }
   if (transcript.includes("who is teena morin") || transcript.includes("who is onee-san") || transcript.includes("who is teens")) {
     readOut("Teena Morin is batch 4 student in F S S A. She likes anime a lot, particularly she is a fan of Ryomen Sukuna and Satoru Gojo");
   }
+  if (transcript.includes("how are you") || transcript.includes("about your health")) {
+    readOut("I am fine How about you Mohamed");
+  }
+  if (transcript.includes("the moon is lovely isn't it")) {
+    readOut("Brother I already have lover");
+  }
+  if (transcript.includes("i am in bad mood")) {
+    readOut("What happens today");
+  }
+  if (transcript.includes("no it's not today")) {
+    readOut("What happens");
+  }
 
-  if (transcript.includes("open youtube") || transcript.includes("you tube") || transcript.includes("u tube")) {
-    readOut("Opening Youtube");
+
+  // App launching logic
+
+
+  //ChatGPT
+  if (transcript.includes("open chat g p t") || transcript.includes("start chat g p t")) {
+    exec('start "" "C:\\Program Files\\ChatGPT"', (error, stdout, stderr) => {       //I want to add the correct path remember
+      if (error) {
+        console.error(`Error opening app: ${error}`);
+        return;
+      }
+      if (stderr) {
+        console.error(`Standard Error: ${stderr}`);
+        return;
+      }
+      console.log(`${stdout} opened successfully`);
+      readOut("Starting ChatGPT");
+    });
+  }
+  if (transcript.includes("take the nap") || transcript.includes("sleep")) {
+    readOut("");
+    recognition.stop();
+  }
+  // Start recognition when "Hey Calista" is heard
+  if (transcript.includes("hey calista") || transcript.includes("hey cals")) {
+    readOut("Hi sir, I am here. Please give me a task.");
+    recognition.start(); // Start the speech recognition on "Hey Calista"
+  }
+
+
+  if (transcript.includes("show my task") || transcript.includes("open my task")) {
+    readOut("Here is your task");
+    window.open("https://moodle.myfssa.in/my/courses.php");
+  }
+  if (transcript.includes("open youtube") || transcript.includes("start youtube")) {
+    readOut("Starting Youtube");
     window.open("https://www.youtube.com/");
   }
-  if (transcript.includes("open google") || transcript.includes("goo gle")) {
-    readOut("Opening Google");
-    window.open("https://www.google.com/");
+  if (transcript.includes("open google")) {
+    readOut("Starting Google");
+    window.open("https://www.google.com/")
   }
-  if (transcript.includes("open github") || transcript.includes("open git hub") || transcript.includes("open git")) {
-    readOut("Opening Github");
-    window.open("https://github.com/");
+  if (transcript.includes("open telegram")) {
+    readOut("Starting Telegram");
+    window.open("https://www.telegram.com/")
   }
-  if (transcript.includes("open my github page") || transcript.includes("open git project")) {
-    readOut("Opening your GitHub Project");
-    window.open("https://github.com/vaseem-ismail");
-  }
-  if (transcript.includes("open telegram") || transcript.includes("open tele gram")) {
-    readOut("Opening Telegram");
-    window.open("https://web.telegram.org/k/");
-  }
-  if (transcript.includes("open firebase") || transcript.includes("open fire base")) {
-    readOut("Opening Firebase");
-    window.open("https://firebase.google.com/");
-  }
-  if (transcript.includes("search for") || transcript.includes("find")) {
-    readOut("Here is the result");
+  if (transcript.includes("what is the time now") || transcript.includes("tell me the time")) {
+    let currentTime = setupTime();
+    readOut(`The current time is ${currentTime}`);
   }
 };
 
-// Start button works
+// Button event listeners
 startBtn.addEventListener("click", () => {
   console.log("Starting recognition...");
   recognition.start();
 });
 
-// Stop button works
 stopBtn.addEventListener("click", () => {
   console.log("Stopping recognition...");
   recognition.stop();
 });
 
-// Cals Voice Setup function
+// Voice Setup function
 function readOut(message) {
   const speech = new SpeechSynthesisUtterance();
   const allVoices = speechSynthesis.getVoices();
-  speech.voice = allVoices[7]; // Adjust if needed
+  speech.voice = allVoices[7]; // Adjust this index based on your available voices
   speech.text = message;
-  speech.volume = 1; // Adjust volume if too loud
+  speech.volume = 1; // Adjust volume if needed
   window.speechSynthesis.speak(speech);
+  createMsg("jmsg")
 }
 
-// Combine window.onload functionality
+// On page load, start time updates and initialize other functions
 window.addEventListener('load', () => {
   setupTime(); // Start time update
   readOut(" "); // Avoid default voice on load
